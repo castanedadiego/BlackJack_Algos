@@ -180,6 +180,36 @@ class Deck {
         return [min, min_idx];
     }
 
+
+    function getTracebacks(graph, //////floyd[0]/////){
+        let tracebacks= [];
+        let distances = [];
+
+        for (const obj in floyd[0]){
+            distances.push(floyd[0][obj].distance);
+        }
+
+        let minimum= findMinValue(distances);
+
+        let node= full.node( minimum[1] );
+
+        tracebacks.push(node)
+
+        while (parseInt(node)!= 0){
+
+            let prev_node = floyd[0][node].predecessor;
+            tracebacks.push( prev_node ); //second item in tuple is number of hits
+            node =  prev_node;
+        }
+
+        tracebacks.reverse();
+
+
+
+        return tracebacks;
+    }
+
+
 let d= new Deck();
 
 let g= new Graph({directed: true});
@@ -198,28 +228,9 @@ let sorted= alg.topsort(full);
 let floyd= alg.floydWarshall(full, weight);
 
 
-let distances = [];
 
-for (const obj in floyd[0]){
-    distances.push(floyd[0][obj].distance);
-}
 
-let minimum= findMinValue(distances);
 
-let tracebacks= [];
-
-let node= full.node( minimum[1] );
-
-tracebacks.push(node)
-
-while (parseInt(node)!= 0){
-
-    let prev_node = floyd[0][node].predecessor;
-    tracebacks.push( prev_node ); //second item in tuple is number of hits
-    node =  prev_node;
-}
-
-tracebacks.reverse();
 
 let hits= [];
 
