@@ -181,13 +181,21 @@ class Deck {
     }
 
 
-    function getTracebacks(graph, startingFloyd){ //startingFloyd is the resulting object of runnin the Floyd- Marshall algorithm on
-        let tracebacks= [];
+    function getDistances(startingFloyd){
         let distances = [];
 
         for (const obj in startingFloyd){
             distances.push(startingFloyd[obj].distance);
         }
+
+        return distances;
+    }
+
+
+    function getTracebacks(graph, startingFloyd){ //startingFloyd is the resulting object of runnin the Floyd- Marshall algorithm on
+        let tracebacks= [];
+        let distances = getDistances(startingFloyd);
+
 
         let minimum= findMinValue(distances);
 
