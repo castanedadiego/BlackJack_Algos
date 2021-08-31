@@ -72,7 +72,7 @@ class Deck {
         return this.drawn_cards.length;
     }
 
-     get num(){
+    get num(){
         let total = 0;
         this.drawn_cards.forEach(card=> total += card.num_rank );
         return total;
@@ -181,12 +181,12 @@ class Deck {
     }
 
 
-    function getTracebacks(graph, //////floyd[0]/////){
+    function getTracebacks(graph, startingFloyd){ //startingFloyd is the resulting object of runnin the Floyd- Marshall algorithm on
         let tracebacks= [];
         let distances = [];
 
-        for (const obj in floyd[0]){
-            distances.push(floyd[0][obj].distance);
+        for (const obj in startingFloyd){
+            distances.push(startingFloyd[obj].distance);
         }
 
         let minimum= findMinValue(distances);
@@ -226,6 +226,7 @@ function weight(e){ return parseInt(full.edge(e)[0] );}
 let sorted= alg.topsort(full);
 
 let floyd= alg.floydWarshall(full, weight);
+let stFloyd= floyd[0];
 
 
 
