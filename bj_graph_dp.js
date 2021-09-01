@@ -139,6 +139,17 @@ class Deck {
 
         let cardsInRound = playerHand.draw_count + dealerHand.draw_count ;
 
+        let winOutcome= winOutcome(dealerHand, playerHand);
+
+
+
+
+        return [cardsInRound, winOutcome];
+    }
+
+
+    function winOutcome(dealerHand, playerHand){
+
         if (playerHand.num >21){
             var winOutcome= 1;
         }
@@ -159,9 +170,10 @@ class Deck {
             }
         }
 
+        return winOutcome
 
-        return [cardsInRound, winOutcome];
     }
+
 
 
     function findMinValue(arr){
@@ -217,6 +229,8 @@ class Deck {
         return tracebacks;
     }
 
+
+// initialize
 
 let d= new Deck();
 
