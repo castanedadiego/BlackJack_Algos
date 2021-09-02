@@ -44,9 +44,7 @@ class Deck {
 
     draw(i=0){
 
-        if (i > 51){
-            i= i- 52;
-        }
+        let i = (i>51)? i-52 : i;
 
         let returned_card = this.cards[i];
         this._draw_index++;
@@ -127,12 +125,9 @@ class Deck {
             }
         }
 
-        if (playerHand.num <=21) {
-
-            while(dealerHand.num <17 ){
-                idx++ ;
-                dealerHand.add_card( deck.draw(idx) );
-            }
+        while(dealerHand.num <17 && playerHand.num<=21 ){
+            idx++ ;
+            dealerHand.add_card( deck.draw(idx) );
         }
 
 
@@ -227,6 +222,23 @@ class Deck {
     }
 
 
+    function getHits(graph, tracebacks){
+
+        let hits= [];
+
+        for(let i=0; i<tracebacks.length-1; i++){
+
+            let origin= tracebacks[i];
+            let target = tracebacks[i+1];
+
+           hits.push(graph.edge(origin, target)[1] );
+
+        }
+
+        return hits;
+    }
+
+
 // initialize
 
 let d= new Deck();
@@ -247,15 +259,7 @@ let sorted= alg.topsort(full);
 let floyd= alg.floydWarshall(full, weight);
 let stFloyd= floyd[0];
 
-let hits= [];
 
-for(let i=0; i<tracebacks.length-1; i++){
 
-    let origin= tracebacks[i];
-    let target = tracebacks[i+1];
-
-   hits.push(full.edge(origin, target)[1] );
-
-}
 
 console.log(floyd[0]);
