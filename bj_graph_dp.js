@@ -1,5 +1,5 @@
 
-//GRAPH EXERCISE BLACKJACK
+//GRAPH EXERCISE BLACKJACK from MIT's 6.006
 
 // H.  Cards played in this Game
 // Profit: +1, 0, -1
@@ -136,7 +136,6 @@ class Deck {
         }
 
 
-
         let cardsInRound = playerHand.draw_count + dealerHand.draw_count ;
 
         let winOutcome= winOutcome(dealerHand, playerHand);
@@ -224,8 +223,6 @@ class Deck {
 
         tracebacks.reverse();
 
-
-
         return tracebacks;
     }
 
@@ -250,11 +247,6 @@ let sorted= alg.topsort(full);
 let floyd= alg.floydWarshall(full, weight);
 let stFloyd= floyd[0];
 
-
-
-
-
-
 let hits= [];
 
 for(let i=0; i<tracebacks.length-1; i++){
@@ -265,10 +257,5 @@ for(let i=0; i<tracebacks.length-1; i++){
    hits.push(full.edge(origin, target)[1] );
 
 }
-
-
-
-
-
 
 console.log(floyd[0]);
