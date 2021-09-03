@@ -1,13 +1,4 @@
 
-//GRAPH EXERCISE BLACKJACK from MIT's 6.006
-
-// H.  Cards played in this Game
-// Profit: +1, 0, -1
-
-//Helper Method Round Outcome (i,h). Out of entire deck, decide which card i to start at and how many hards to hit. (o i can be interpreted as how many cards have been played)
-//Returns tuple: [# of cards played in this round, $ made]
-
-
 var Graph = require("@dagrejs/graphlib").Graph;
 var alg= require("@dagrejs/graphlib/").alg;
 
@@ -44,9 +35,9 @@ class Deck {
 
     draw(i=0){
 
-        let i = (i>51)? i-52 : i;
+        let idx = (i>51)? i-52 : i;
 
-        let returned_card = this.cards[i];
+        let returned_card = this.cards[idx];
         this._draw_index++;
 
         return returned_card ;
@@ -94,8 +85,10 @@ class Deck {
                 outcome= roundOutcome(deck, i, h);
                 console.log(outcome);
 
-                graph.setEdge(i.toString(), ( i +outcome[0] ).toString() , [ outcome[1].toString(), h] ) //outcome 0 is the number of cards played in round; Outcome[1] is weight of edge
+                //outcome 0 is the number of cards played in round; Outcome[1] is weight of edge/
+                //We are also passing in, h, the number of hits to each edge to ease strategy retrieval.
 
+                graph.setEdge(i.toString(), ( i +outcome[0] ).toString() , [ outcome[1].toString(), h] )
                 //draw edge from i to ( O[0] + i ) \
                 //cost is O[1]
 
@@ -107,6 +100,31 @@ class Deck {
         }
 
         return graph;
+    }
+
+    function winOutcome(dealerHand, playerHand){
+
+        if (playerHand.num >21){
+            return 1;
+        }
+        else{
+            if (dealerHand.num > 21){
+                return -1;
+            }
+            else if (playerHand.num === dealerHand.num){
+                return 0;
+            }
+
+            else if (playerHand.num > dealerHand.num){
+                return -1;
+            }
+
+            else if (playerHand.num < dealerHand.num){
+                return 1;
+            }
+
+        }
+
     }
 
     function roundOutcome(deck, i, hit){
@@ -133,40 +151,14 @@ class Deck {
 
         let cardsInRound = playerHand.draw_count + dealerHand.draw_count ;
 
-        let winOutcome= winOutcome(dealerHand, playerHand);
+        let winStatus= winOutcome(dealerHand, playerHand);
 
 
 
 
-        return [cardsInRound, winOutcome];
+        return [cardsInRound, winStatus];
     }
 
-
-    function winOutcome(dealerHand, playerHand){
-
-        if (playerHand.num >21){
-            var winOutcome= 1;
-        }
-        else{
-            if (dealerHand.num > 21){
-                var winOutcome=  -1;
-            }
-            else if (playerHand.num === dealerHand.num){
-                var winOutcome= 0;
-            }
-
-            else if (playerHand.num > dealerHand.num){
-                var winOutcome= -1;
-            }
-
-            else if (playerHand.num < dealerHand.num){
-                var winOutcome= 1;
-            }
-        }
-
-        return winOutcome
-
-    }
 
 
 
@@ -205,13 +197,13 @@ class Deck {
 
         let minimum= findMinValue(distances);
 
-        let node= full.node( minimum[1] );
+        let node= graph.node( minimum[1] );
 
         tracebacks.push(node)
 
         while (parseInt(node)!= 0){
 
-            let prev_node = floyd[0][node].predecessor;
+            let prev_node = startingFloyd[node].predecessor;
             tracebacks.push( prev_node ); //second item in tuple is number of hits
             node =  prev_node;
         }
@@ -232,34 +224,58 @@ class Deck {
             let target = tracebacks[i+1];
 
            hits.push(graph.edge(origin, target)[1] );
-
         }
 
         return hits;
     }
 
 
+    class getNewOptimalStrat{
+
+        constructor() {
+            this.deck= new Deck();
+            this.graph = this.setGraph();
+
+
+        }
+
+
+        setGraph(){
+            g= new Graph({directed: true});
+
+            for(let i=0; i< 52; i++){
+                g.setNode(`${i}`, i);
+            }
+
+            drawEdges(this.deck, g, 0);
+
+            return g;
+        }
+
+
+
+
+
+
+
+
+
+
+        let weight= (e)=> {
+            return parseInt(full.edge(e)[0] );
+        }
+
+        this.floyd= alg.floydWarshall(full, weight);
+        let stFloyd= floyd[0];
+
+        this.tbacks= getTracebacks(full, stFloyd);
+
+        this.hits= getHits(full, tbacks);
+
+    }
+
+
+
 // initialize
 
-let d= new Deck();
-
-let g= new Graph({directed: true});
-for(let i=0; i< 52; i++){
-    g.setNode(`${i}`, i);
-}
-
-let nodes= g.nodes();
-
-let full= drawEdges(d, g, 0);
-
-function weight(e){ return parseInt(full.edge(e)[0] );}
-
-let sorted= alg.topsort(full);
-
-let floyd= alg.floydWarshall(full, weight);
-let stFloyd= floyd[0];
-
-
-
-
-console.log(floyd[0]);
+let a= getNewOptimalStrat;
