@@ -230,7 +230,7 @@ class Deck {
     }
 
 
-    class getNewOptimalStrat{
+    class OptimalStrat{
 
         constructor() {
             this.deck= new Deck();
@@ -263,4 +263,4 @@ class Deck {
 
 // initialize
 
-let hello= new getNewOptimalStrat();
+let hello= new OptimalStrat();

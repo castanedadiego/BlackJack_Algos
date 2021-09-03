@@ -18,5 +18,5 @@ Using the graph approach: each graph node represents the deck state of # of card
 
 To use it yourself:
 1. Install dependencies with npm install on directory.
-2. Run bj_graph_dp.js on node
-3. The optimal path and strategy are properties of the object called "a". the tbacks property shows the optimal path, and hits shows the # of hits in each round to reach such path.
+2. Run bj_graph_dp.js on node.
+3. The optimal path and strategy are properties of the object named "a". the tbacks property shows the optimal path, and hits shows the # of hits in each round to reach such path.
