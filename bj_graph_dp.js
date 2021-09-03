@@ -235,13 +235,14 @@ class Deck {
         constructor() {
             this.deck= new Deck();
             this.graph = this.setGraph();
-
-
+            this.floyd= alg.floydWarshall(this.graph, this.weight)[0];
+            this.tbacks= getTracebacks(this.graph, this.floyd);
+            this.hits= getHits(this.graph, this.tbacks);
         }
 
 
         setGraph(){
-            g= new Graph({directed: true});
+            let g= new Graph({directed: true});
 
             for(let i=0; i< 52; i++){
                 g.setNode(`${i}`, i);
@@ -252,25 +253,9 @@ class Deck {
             return g;
         }
 
-
-
-
-
-
-
-
-
-
-        let weight= (e)=> {
-            return parseInt(full.edge(e)[0] );
+        weight= (e)=> {
+            return parseInt(this.graph.edge(e)[0] );
         }
-
-        this.floyd= alg.floydWarshall(full, weight);
-        let stFloyd= floyd[0];
-
-        this.tbacks= getTracebacks(full, stFloyd);
-
-        this.hits= getHits(full, tbacks);
 
     }
 
@@ -278,4 +263,4 @@ class Deck {
 
 // initialize
 
-let a= getNewOptimalStrat;
+let hello= new getNewOptimalStrat();
