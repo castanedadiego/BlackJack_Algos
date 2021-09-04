@@ -263,4 +263,4 @@ class Deck {
 
 // initialize
 
-let hello= new OptimalStrat();
+let a= new OptimalStrat();
