@@ -241,7 +241,7 @@ class Deck {
         }
 
 
-        setGraph(){
+        setGraph= ()=>{
             let g= new Graph({directed: true});
 
             for(let i=0; i< 52; i++){
