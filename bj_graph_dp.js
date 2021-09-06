@@ -75,7 +75,7 @@ class Deck {
     }
 }
 
-    function drawEdges(deck, graph,i){
+    var drawEdges= (deck, graph,i)=>{
 
         while (i<52) {
 
@@ -90,10 +90,9 @@ class Deck {
 
                 graph.setEdge(i.toString(), ( i +outcome[0] ).toString() , [ outcome[1].toString(), h] )
                 //draw edge from i to ( O[0] + i ) \
-                //cost is O[1]
+                //cost is O[1], the Win Outcome of the round which is -1 for a win, 0 for a draw, and 1 for a loss.
 
 
-                //topological sort + dfs
             }
 
             i++;
@@ -102,7 +101,7 @@ class Deck {
         return graph;
     }
 
-    function winOutcome(dealerHand, playerHand){
+    const winOutcome= (dealerHand, playerHand)=>{
 
         if (playerHand.num >21){
             return 1;
@@ -127,7 +126,7 @@ class Deck {
 
     }
 
-    function roundOutcome(deck, i, hit){
+    const roundOutcome= (deck, i, hit) =>{
 
         let idx= i;
 
@@ -162,7 +161,7 @@ class Deck {
 
 
 
-    function findMinValue(arr){
+    const findMinValue= (arr)=>{
 
         //finds min value; if multiple mins, returns the first one
 
@@ -179,7 +178,7 @@ class Deck {
     }
 
 
-    function getDistances(startingFloyd){
+    const getDistances= (startingFloyd)=>{
         let distances = [];
 
         for (const obj in startingFloyd){
@@ -190,7 +189,7 @@ class Deck {
     }
 
 
-    function getTracebacks(graph, startingFloyd){ //startingFloyd is the resulting object of runnin the Floyd- Marshall algorithm on
+    const getTracebacks=(graph, startingFloyd)=>{ //startingFloyd is the resulting object of runnin the Floyd- Marshall algorithm on
         let tracebacks= [];
         let distances = getDistances(startingFloyd);
 
@@ -214,7 +213,7 @@ class Deck {
     }
 
 
-    function getHits(graph, tracebacks){
+    const getHits= (graph, tracebacks)=>{
 
         let hits= [];
 
