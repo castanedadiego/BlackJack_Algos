@@ -18,7 +18,6 @@ class Card {
 class Deck {
     constructor(){
         this.cards= this.make_fresh_deck();
-        this._draw_index = 0;
     }
 
     make_fresh_deck(){
@@ -36,9 +35,7 @@ class Deck {
     draw(i=0){
 
         let idx = (i>51)? i-52 : i;
-
         let returned_card = this.cards[idx];
-        this._draw_index++;
 
         return returned_card ;
     }
@@ -91,7 +88,6 @@ class Deck {
                 graph.setEdge(i.toString(), ( i +outcome[0] ).toString() , [ outcome[1].toString(), h] )
                 //draw edge from i to ( O[0] + i ) \
                 //cost is O[1], the Win Outcome of the round which is -1 for a win, 0 for a draw, and 1 for a loss.
-
 
             }
 
