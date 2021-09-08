@@ -193,7 +193,6 @@ class Deck {
         let tracebacks= [];
         let distances = getDistances(startingFloyd);
 
-
         let minimum= findMinValue(distances);
 
         let node= graph.node( minimum[1] );
