@@ -224,8 +224,8 @@ class Deck {
 
     class OptimalStrat{
 
-        constructor() {
-            this.deck= new Deck();
+        constructor(deck= new Deck() ) {
+            this.deck= deck;
             this.graph = this.setGraph();
             this.floyd= alg.floydWarshall(this.graph, this.weight)[0];
             this.tbacks= getTracebacks(this.graph, this.floyd);
@@ -252,9 +252,12 @@ class Deck {
     }
 
 
-    let dpSolution= () => {
 
-        d= new Deck();
+
+
+    let dpSolution= (deck = new Deck) => {
+
+        d= deck;
         var dp_array = [];
 
         for (let i= 51; i>=0; i--){
@@ -270,7 +273,8 @@ class Deck {
                     }
                 }
 
-                console.log(choices);
+                choices = choices.filter( (num) => {return !Number.isNaN(num)});
+
                 dp_array[i]= Math.min(...choices);
         }
 
@@ -288,4 +292,7 @@ class Deck {
 
 // initialize
 
-let a= new OptimalStrat();
+let d= new Deck();
+
+let a= new OptimalStrat(d);
+let b= dpSolution(d);

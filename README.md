@@ -15,8 +15,11 @@ There are two approaches to this problem, Graph Path-Finding Optimization and Dy
 
 Using the graph approach: each graph node represents the deck state of # of cards already dealt. Connections between nodes will be made if its possible to, in one round, go from node A to node B. Edges' weights will be the outcome of the round (-1 for a win, 0 for a draw, or 1 for a loss). The resulting graph will be a Directed Acyclic Graph. We then run the Floyd-Warshall algorithm to find the shortest distance between any node pairs. For practical purposes, we lastly run methods to get the most profitable path starting from the undealt deck and the hit/stand stategy one would need to employ to traverse such path.
 
+Using the dynamic programming approach, the subproblems are the graph states which are solved in the order of the topological sort. Starting at card i, what is the most profit one can make? The answer is the round outcome (new information ) + the optimal answer of the state (or implicitly, graph node) we are directed to. E.G if starting at card 40 we know we can make $5 profit, then the max profit at card 35 where we land on card 40 after the round will be the round outcome + the $5 dollars.
+
 
 To use it yourself:
 1. Install dependencies with npm install on directory.
 2. Run bj_graph_dp.js on node.
-3. The optimal path and strategy are properties of the object named "a". the tbacks property shows the optimal path, and hits shows the # of hits in each round to reach such path.
+3. The optimal path and strategy are properties of the object named "a". The tbacks property shows the optimal path, and hits shows the # of hits in each round to reach such path.
+4. The dp approach is an an object named "b" which holds the 'DP array' or the optimal profit at each card dealt (i).
