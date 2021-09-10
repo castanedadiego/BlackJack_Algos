@@ -255,22 +255,22 @@ class Deck {
     let dpSolution= () => {
 
         d= new Deck();
+        var dp_array = [];
 
-        for (let i= 52; i>=0; i--){
+        for (let i= 51; i>=0; i--){
 
-            var dp_array =[];
+            var choices= [0];
 
-                for (let h=0; h< 52-i; h++){
-
-                    var choices= [0];
+                for (let h=0; h<= 52-i; h++){
 
                     let o = roundOutcome(d, i, h);
 
-                    choices.push(o[1] + dp_array[i+o[0]]);
+                    if (i+ o[0] <=52){
+                        choices.push( o[1] + dp_array[i + o[0] ]);
+                    }
                 }
 
                 console.log(choices);
-
                 dp_array[i]= Math.min(...choices);
         }
 
