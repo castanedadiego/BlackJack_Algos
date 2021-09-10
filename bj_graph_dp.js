@@ -80,8 +80,6 @@ class Deck {
 
                 // O = round-outcome(i,h)
                 outcome= roundOutcome(deck, i, h);
-                console.log(outcome);
-
                 //outcome 0 is the number of cards played in round; Outcome[1] is weight of edge/
                 //We are also passing in, h, the number of hits to each edge to ease strategy retrieval.
 
@@ -256,9 +254,27 @@ class Deck {
 
     let dpSolution= () => {
 
-        let dp_array =[];
+        d= new Deck();
 
+        for (let i= 52; i>=0; i--){
 
+            var dp_array =[];
+
+                for (let h=0; h< 52-i; h++){
+
+                    var choices= [0];
+
+                    let o = roundOutcome(d, i, h);
+
+                    choices.push(o[1] + dp_array[i+o[0]]);
+                }
+
+                console.log(choices);
+
+                dp_array[i]= Math.min(...choices);
+        }
+
+        return dp_array
     }
 
 
