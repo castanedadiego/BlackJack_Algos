@@ -254,6 +254,21 @@ class Deck {
     }
 
 
+    let dpSolution= () => {
+
+        let dp_array =[];
+
+
+    }
+
+
+
+
+
+
+
+
+
 
 // initialize
 
