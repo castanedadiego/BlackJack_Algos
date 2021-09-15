@@ -251,10 +251,6 @@ class Deck {
 
     }
 
-
-
-
-
     let dpSolution= (deck = new Deck) => {
 
         d= deck;
@@ -274,7 +270,6 @@ class Deck {
                 }
 
                 choices = choices.filter( (num) => {return !Number.isNaN(num)});
-
                 dp_array[i]= Math.min(...choices);
         }
 
@@ -286,13 +281,8 @@ class Deck {
 
 
 
-
-
-
-
 // initialize
 
 let d= new Deck();
-
 let a= new OptimalStrat(d);
 let b= dpSolution(d);
